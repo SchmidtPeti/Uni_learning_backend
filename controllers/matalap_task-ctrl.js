@@ -71,8 +71,22 @@ updateMatAlap_task = async (req, res) => {
             })
     })
 }
+getMatAlapTasks = async (req, res) => {
+    await MatAlap_task.find({}, (err, matalaptasks) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+        if (!matalaptasks.length) {
+            return res
+                .status(404)
+                .json({ success: false, error: `Task not found` })
+        }
+        return res.status(200).json({ success: true, data: matalaptasks })
+    }).catch(err => console.log(err))
+}
 
 module.exports = {
     createMatAlap_task,
     updateMatAlap_task,
+    getMatAlapTasks,
 }
