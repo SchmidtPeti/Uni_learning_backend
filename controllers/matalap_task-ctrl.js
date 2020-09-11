@@ -10,7 +10,8 @@ createMatAlap_task = (req, res) => {
         })
     }
 
-    const matalap_task = new MatAlap_task(body)
+    const matalap_task = new MatAlap_task(body);
+    console.log(matalap_task);
 
     if (!matalap_task) {
         return res.status(400).json({ success: false, error: err })
