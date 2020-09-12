@@ -8,6 +8,7 @@ const apiPort = 3000;
 
 const matalapTaskRouter = require('./routes/matalap_task-router');
 const { json } = require('body-parser');
+const generalTaskRouter = require('./routes/general_task-router');
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(cors());
@@ -31,5 +32,6 @@ app.get('/',(req,res)=> {
 })*/
 
 app.use('/api',matalapTaskRouter);
+app.use('/api',generalTaskRouter);
 
 app.listen(apiPort,() => console.log(`Completed on ${apiPort}`));
