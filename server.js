@@ -18,7 +18,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 
 
 app.get('/',(req,res)=> {
-    res.send('Hello World!');
+    res.send('Uni_learning server is on!');
 })
 
 /*app.post('/u',(req,res)=>{
