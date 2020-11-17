@@ -21,16 +21,6 @@ app.get('/',(req,res)=> {
     res.send('Uni_learning server is on!');
 })
 
-/*app.post('/u',(req,res)=>{
-    const body = req.body.file;
-    let response_ = "";
-    S3FileUpload
-    .deleteFile(body, config)
-    .then(response => {response_ = response})
-    .catch(err => console.error(err))
-    return res.send(response_);
-})*/
-
 app.use('/api',matalapTaskRouter);
 app.use('/api',generalTaskRouter);
 
