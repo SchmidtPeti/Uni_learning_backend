@@ -33,6 +33,21 @@ createMatAlap_task = (req, res) => {
             })
         })
 }
+deleteMatAlap_Task = async (req, res) => {
+    await MatAlap_task.findOneAndDelete({ _id: req.params.id }, (err, MatAlapTask) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+
+        if (!MatAlapTask) {
+            return res
+                .status(404)
+                .json({ success: false, error: `MatAlapTask hiba not found` })
+        }
+
+        return res.status(200).json({ success: true, data: MatAlapTask })
+    }).catch(err => console.log(err))
+}
 
 updateMatAlap_task = async (req, res) => {
     const body = req.body
