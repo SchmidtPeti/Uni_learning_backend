@@ -52,8 +52,11 @@ updateGeneralTask = async (req, res) => {
         }
         general_task.task_description = body.task_description
         general_task.topic = body.topic
+        general_task.task_type = body.task_type
         general_task.hardness = body.hardness
-        general_task.solutation = body.solutation
+        general_task.solution = body.solutation
+        general_task.solution_by = body.solution_by
+        general_task.solution_by_credit = body.solution_by_credit
         general_task
             .save()
             .then(() => {
