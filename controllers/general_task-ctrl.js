@@ -34,9 +34,9 @@ createGeneraltask = (req, res) => {
 }
 
 updateGeneralTask = async (req, res) => {
-    const body = req.body
+    const {difficulty,major,semester,solution,solution_by,solution_by_credit,source,subject_name,task_description,task_type,time,topic,university} = req.body
 
-    if (!body) {
+    if (!req.body) {
         return res.status(400).json({
             success: false,
             error: 'You must provide a body to update',
@@ -50,15 +50,20 @@ updateGeneralTask = async (req, res) => {
                 message: 'Math task not found!',
             })
         }
-        general_task.task_description = body.task_description
-        general_task.topic = body.topic
-        general_task.task_type = body.task_type
-        general_task.hardness = body.hardness
-        general_task.solution = body.solutation
-        general_task.solution_by = body.solution_by
-        general_task.solution_by_credit = body.solution_by_credit
-        general_task
-            .save()
+        general_task.task_description = task_description
+        general_task.topic = topic
+        general_task.task_type = task_type
+        general_task.difficulty = difficulty
+        general_task.solution = solution
+        general_task.solution_by = solution_by
+        general_task.solution_by_credit = solution_by_credit
+        general_task.major = major
+        general_task.semester = semester
+        general_task.source = source
+        general_task.subject_name = subject_name
+        general_task.time = time
+        general_task.university = university
+        general_task.save()
             .then(() => {
                 return res.status(200).json({
                     success: true,
@@ -67,6 +72,7 @@ updateGeneralTask = async (req, res) => {
                 })
             })
             .catch(error => {
+                console.log(error);
                 return res.status(404).json({
                     error,
                     message: 'Math not updated!',
@@ -87,9 +93,25 @@ getGeneralTasks = async (req, res) => {
         return res.status(200).json({ success: true, data: general_tasks })
     }).catch(err => console.log(err))
 }
+deleteGeneral_Task = async (req, res) => {
+    await General_task.findOneAndDelete({ _id: req.params.id }, (err, General_task) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+
+        if (!General_task) {
+            return res
+                .status(404)
+                .json({ success: false, error: `General_task not found` })
+        }
+
+        return res.status(200).json({ success: true, data: General_task })
+    }).catch(err => console.log(err))
+}
 
 module.exports = {
     createGeneraltask,
     updateGeneralTask,
     getGeneralTasks,
+    deleteGeneral_Task
 }
