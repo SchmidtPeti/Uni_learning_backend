@@ -6,7 +6,7 @@ const router = express.Router()
 
 router.post('/matalap_task', MathalapCtrl.createMatAlap_task)
 router.put('/updateMatTask/:id', MathalapCtrl.updateMatAlap_task)
-router.get('/matalap_tasks', MathalapCtrl.getMatAlapTasks)
+router.get('/matalap_tasks/:cat', MathalapCtrl.getMatAlapTasks)
 router.delete('/deleteMatTask/:id',MathalapCtrl.deleteMatAlap_Task)
 
 

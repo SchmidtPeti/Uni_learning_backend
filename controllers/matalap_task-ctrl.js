@@ -1,4 +1,6 @@
-const MatAlap_task = require('../models/matalap_task-model')
+const MatAlap_task = require('../models/matalap_task-model');
+const Categories = require('../lists/listDictionary');
+ 
 
 createMatAlap_task = (req, res) => {
     const body = req.body
@@ -96,7 +98,14 @@ updateMatAlap_task = async (req, res) => {
     })
 }
 getMatAlapTasks = async (req, res) => {
-    await MatAlap_task.find({}, (err, matalaptasks) => {
+    const wantedCategory = Categories[req.params.cat];
+    let Matlalaptasks = {};
+    for(let topic of wantedCategory){
+        let currentTopicTask =await MatAlap_task.find(topic);
+        Object.assign(Matlalaptasks,currentTopicTask);
+    }
+    return res.status(200).json({ success: true, data: Matlalaptasks });    
+        /*, (err, matalaptasks) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
@@ -106,7 +115,7 @@ getMatAlapTasks = async (req, res) => {
                 .json({ success: false, error: `Task not found` })
         }
         return res.status(200).json({ success: true, data: matalaptasks })
-    }).catch(err => console.log(err))
+    }).catch(err => console.log(err))*/
 }
 
 module.exports = {
