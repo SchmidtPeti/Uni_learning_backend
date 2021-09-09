@@ -99,10 +99,12 @@ updateMatAlap_task = async (req, res) => {
 }
 getMatAlapTasks = async (req, res) => {
     const wantedCategory = Categories[req.params.cat];
-    let Matlalaptasks = {};
+    let Matlalaptasks = [];
     for(let topic of wantedCategory){
-        let currentTopicTask =await MatAlap_task.find(topic);
-        Object.assign(Matlalaptasks,currentTopicTask);
+        let mergedArray = [];
+        await MatAlap_task.find(topic).then(currentTopicTasks => 
+            {mergedArray=Matlalaptasks.concat(currentTopicTasks)});
+        Matlalaptasks = mergedArray;
     }
     return res.status(200).json({ success: true, data: Matlalaptasks });    
         /*, (err, matalaptasks) => {
