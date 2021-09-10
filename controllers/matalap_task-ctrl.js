@@ -98,13 +98,19 @@ updateMatAlap_task = async (req, res) => {
     })
 }
 getMatAlapTasks = async (req, res) => {
-    const wantedCategory = Categories[req.params.cat];
+    const categoryFromTheUrl = req.params.cat;
     let Matlalaptasks = [];
-    for(let topic of wantedCategory){
-        let mergedArray = [];
-        await MatAlap_task.find(topic).then(currentTopicTasks => 
-            {mergedArray=Matlalaptasks.concat(currentTopicTasks)});
-        Matlalaptasks = mergedArray;
+    if(categoryFromTheUrl==="*"){
+        await MatAlap_task.find({}).then(allMatTasks => Matlalaptasks=allMatTasks);
+    }
+    else{
+        const wantedCategory = Categories[categoryFromTheUrl];
+        for(let topic of wantedCategory){
+            let mergedArray = [];
+            await MatAlap_task.find(topic).then(currentTopicTasks => 
+                {mergedArray=Matlalaptasks.concat(currentTopicTasks)});
+            Matlalaptasks = mergedArray;
+        }
     }
     return res.status(200).json({ success: true, data: Matlalaptasks });    
         /*, (err, matalaptasks) => {
